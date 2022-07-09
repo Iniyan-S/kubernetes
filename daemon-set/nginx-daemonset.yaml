@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-daemonset
+  labels:
+    ## This label is applied to DaemonSet
+    app: nginx
+    gpuexist: "true"
+spec:
+  selector:
+    matchLabels:
+      name: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        gpuexist: "true"
+        name: nginx
+    spec:
+      nodeSelector:
+        gpuexist: "true"
+      containers:
+        - name: nginx
+          image: nginx:1.10.0
+          
