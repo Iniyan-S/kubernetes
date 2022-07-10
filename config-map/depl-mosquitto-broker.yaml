@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: depl-mosquitto-broker
+  labels:
+    app: mosquitto-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: mmosquitto-container
+  template:
+    metadata:
+      labels:
+        app: mmosquitto-container
+    spec:
+      containers:
+        - name: mosquitto
+          image: eclipse-mosquitto:1.6.2
+          ports:
+            - containerPort: 1883
+      volumes:
+        -name: mosquitto-config
+
+
+        
