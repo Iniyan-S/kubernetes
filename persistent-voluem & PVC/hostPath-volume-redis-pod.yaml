@@ -5,7 +5,7 @@ metadata:
   name: redis-hostpath
 spec:
   nodeSelector: # kubectl label --list nodes node_name (or) kubectl get nodes --show-labels
-    volume-mnt: "true" # to assign a node "kubectl label nodes <node-name> <key=value> / kubectl label nodes node01 volume-mnt=true"
+    volume-mnt: "true" # to assign a label to a node "kubectl label nodes <node-name> <key=value> / kubectl label nodes node01 volume-mnt=true"
   containers:
     - name: redis-container
       image: redis

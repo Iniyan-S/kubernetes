@@ -18,7 +18,7 @@ spec:
         name: nginx
     spec:
       nodeSelector:  # kubectl label --list nodes node_name (or) kubectl get nodes --show-labels
-        gpuexist: "true" # to assign a node "kubectl label nodes <node-name> <key=value> / kubectl label nodes node01 gpuexist=true"
+        gpuexist: "true" # to assign a label to a node "kubectl label nodes <node-name> <key=value> / kubectl label nodes node01 gpuexist=true"
       containers:
         - name: nginx
           image: nginx:1.10.0
