@@ -1,0 +1,18 @@
+#hostPath Example
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: redis-hostpath
+spec:
+  nodeSelector: # kubectl label --list nodes node_name (or) kubectl get nodes --show-labels
+    volume-mnt: "true" # to assign a node "kubectl label nodes <node-name> <key=value> / kubectl label nodes node01 volume-mnt=true"
+  containers:
+    - name: redis-container
+      image: redis
+      volumeMounts:
+        - mountPath: /test-mnt
+          name: test-vol-hostpath
+  volumes:
+    - name: test-vol-hostpath
+      hostPath:
+        path: /test-vol
