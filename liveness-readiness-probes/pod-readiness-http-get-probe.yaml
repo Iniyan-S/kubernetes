@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: readiness-httpget-pod
+  labels:
+    probeType: readiness
+    app: nginx
+spec:
+  containers:
+  - name: readiness-httpget
+    image: iniyan/nginx-health:1.0 # This image contains health.html file at doc-root /usr/share/nginx/html/
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    readinessProbe: 
+      initialDelaySeconds: 10 # Number of seconds after the container has started before readiness probes are initiated
+      periodSeconds: 5 # How often (in seconds) to perform the probe
+      httpGet:
+        scheme: HTTP 
+        port: 80
+        path: /health.html
+
+
+# To Test:
+# $ kc expose pod readiness-httpget-pod --name=clusterip --port=80 --target-port=80
+# $ kubectl run busybox -it --image=busybox:1.28 --restart=Never --rm
+# From busybox pod run # wget -qO - 10.64.13.248/health.html (replace with clusterip service created above)
+# Connect nginx pod $ kc exec -it readiness-httpget-pod -- /bin/bash
+# Rename file health.html to health and check readiness of pod 
+# From busybox pod try to wget and see the result (refuses connection)
+# Revert the changes and verify again (rename back to health.html and wget)
