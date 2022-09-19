@@ -1,0 +1,15 @@
+# The purpose of this ConfigMap is to update the CoreDNS of kube-dns in kube-system which provides the service discovery in the K8S cluster
+# This updates to have functionality to have local service discovery as well as to resovle domains outside the cluster (locally DNS / AWS 53 private zone) and public Name Servers
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-dns # This is mandatory value (don't change to any value)
+  namespace: kube-system # Don't change
+data:
+  stubDomains: |
+    {"iniyan.me": ["97.74.102.23", "173.201.70.23"]} 
+  upstreamNameservers: |
+    ["8.8.8.8"]
+# stub domain, "iniyan.me" ["97.74.102.23", "97.74.102.23"] is the name server IPs (which is setup in any Cloud Provider's DNS service e.g. AWS Route53/  and its Name Server IPs)
+# ["8.8.8.8"] IP of any publicly available Name Server

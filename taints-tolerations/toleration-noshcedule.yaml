@@ -1,0 +1,22 @@
+# To schedule a pod on a node tainted with key1=value1:NoSchedule
+
+# root@controlplane ~ ➜  kubectl describe node node01 | grep -i taint
+# Taints:             key1=value1:NoSchedule
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx3
+  name: nginx3
+spec:
+  containers:
+  - image: nginx
+    name: nginx3
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoSchedule"
+    

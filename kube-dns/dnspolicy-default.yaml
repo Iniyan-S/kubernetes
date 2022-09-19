@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: dnspolicy-default
+  namespace: default
+  labels:
+    dnspolicy: default
+spec:
+  containers:
+  - name: busybox-dns-test
+    image: busybox:1.28
+    imagePullPolicy: IfNotPresent
+    args:
+    - sleep
+    - "3600"
+  dnsPolicy: Default
+  restartPolicy: Always
+# This Pod has dnsPolicy flag set to Default
+# If dnsPolicy is set to “Default”, then the name resolution configuration is inherited from the node the pods run on.
+# When deployed inside the container, it showed the DNS server value of Google Cloud in /etc/resolv.conf file and able to ping outside.
+# But it restricts the function to discover service inside the cluster, was unable to ping to “.cluster.local” 
+
